@@ -2,37 +2,66 @@ import { Link } from "react-router-dom";
 
 function HostelCard({ hostel }) {
   return (
-    <div className="hostel-card">
-      <div className="hostel-image">
-        <img src={hostel.image} alt={hostel.name} />
+    <div className="product-card">
 
-        <div className="rating">
-          ⭐ {hostel.rating}
-        </div>
+      <div className="product-image">
+
+        <img
+          src={hostel.image}
+          alt={hostel.name}
+        />
+
+        <span className={`product-type ${hostel.type}`}>
+          {hostel.type === "sale"
+            ? "FOR SALE"
+            : hostel.type === "rent"
+            ? "FOR RENT"
+            : "EXCHANGE"}
+        </span>
+
+        <button className="favorite-btn">
+          ♡
+        </button>
+
       </div>
 
-      <div className="hostel-card-content">
+      <div className="product-content">
+
+        <div className="product-category">
+          {hostel.category}
+        </div>
+
         <h3>{hostel.name}</h3>
 
-        <p className="location">
+        <p className="product-location">
           📍 {hostel.location}
         </p>
 
-        <div className="hostel-info">
-          <span>💰 ₹{hostel.rent}/month</span>
-          <span>🚶 {hostel.distance}</span>
+        <div className="product-bottom">
+
+          <div>
+            <strong>₹{hostel.rent}</strong>
+
+            {hostel.type === "rent" && (
+              <small>/month</small>
+            )}
+          </div>
+
+          <span className="condition">
+            {hostel.condition}
+          </span>
+
         </div>
 
-        <div className="facilities">
-          {hostel.facilities.map((facility, index) => (
-            <span key={index}>{facility}</span>
-          ))}
-        </div>
-
-        <Link to={`/hostel/${hostel.id}`} className="details-btn">
-          View Details
+        <Link
+          to={`/hostel/${hostel.id}`}
+          className="details-btn"
+        >
+          View Product →
         </Link>
+
       </div>
+
     </div>
   );
 }
