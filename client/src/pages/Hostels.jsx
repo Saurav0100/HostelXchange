@@ -1,127 +1,251 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import hostels from "../data/hostels";
 import HostelCard from "../components/HostelCard";
-import FilterBar from "../components/FilterBar";
+
+const products = [
+  {
+    id: 1,
+    name: "Study Table",
+    category: "Furniture",
+    location: "ABC Hostel",
+    rent: "1,500",
+    condition: "Good Condition",
+    type: "sale",
+    image:
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 2,
+    name: "Engineering Books Set",
+    category: "Books",
+    location: "Shree Hostel",
+    rent: "800",
+    condition: "Like New",
+    type: "sale",
+    image:
+      "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 3,
+    name: "Bicycle",
+    category: "Transport",
+    location: "Campus Hostel",
+    rent: "500",
+    condition: "Good Condition",
+    type: "rent",
+    image:
+      "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 4,
+    name: "Scientific Calculator",
+    category: "Electronics",
+    location: "Royal Hostel",
+    rent: "700",
+    condition: "Excellent",
+    type: "sale",
+    image:
+      "https://images.unsplash.com/photo-1592051420422-265a8a6e5a38?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 5,
+    name: "Mini Cooler",
+    category: "Electronics",
+    location: "Sunrise Hostel",
+    rent: "2,500",
+    condition: "Good Condition",
+    type: "sale",
+    image:
+      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 6,
+    name: "Induction Cooktop",
+    category: "Hostel Essentials",
+    location: "Lake View Hostel",
+    rent: "150",
+    condition: "Good Condition",
+    type: "rent",
+    image:
+      "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80",
+  },
+];
 
 function Hostels() {
   const [searchParams] = useSearchParams();
 
-  const initialLocation = searchParams.get("location") || "";
+  const initialSearch =
+    searchParams.get("search") || "";
 
-  const [search, setSearch] = useState(initialLocation);
+  const [search, setSearch] =
+    useState(initialSearch);
 
-  const [filters, setFilters] = useState({
-    gender: "",
-    roomType: "",
-    facility: "",
-    maxRent: "",
-  });
+  const [type, setType] = useState("all");
 
-  const filteredHostels = useMemo(() => {
-    return hostels.filter((hostel) => {
-      const searchText = search.toLowerCase().trim();
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+
+      const text = search.toLowerCase();
 
       const matchesSearch =
-        !searchText ||
-        hostel.name.toLowerCase().includes(searchText) ||
-        hostel.location.toLowerCase().includes(searchText) ||
-        hostel.city.toLowerCase().includes(searchText);
+        product.name
+          .toLowerCase()
+          .includes(text) ||
+        product.category
+          .toLowerCase()
+          .includes(text) ||
+        product.location
+          .toLowerCase()
+          .includes(text);
 
-      const matchesGender =
-        !filters.gender || hostel.gender === filters.gender;
+      const matchesType =
+        type === "all" ||
+        product.type === type;
 
-      const matchesRoomType =
-        !filters.roomType || hostel.roomType === filters.roomType;
-
-      const matchesFacility =
-        !filters.facility ||
-        hostel.facilities.includes(filters.facility);
-
-      const matchesRent =
-        !filters.maxRent || hostel.rent <= Number(filters.maxRent);
-
-      return (
-        matchesSearch &&
-        matchesGender &&
-        matchesRoomType &&
-        matchesFacility &&
-        matchesRent
-      );
+      return matchesSearch && matchesType;
     });
-  }, [search, filters]);
+  }, [search, type]);
 
   return (
-    <section className="listing-page">
+    <section className="marketplace-page">
+
       <div className="container">
 
-        <div className="listing-header">
-          <div>
-            <span className="section-label">EXPLORE HOSTELS</span>
+        <div className="marketplace-header">
 
-            <h1>Find Your Perfect Stay</h1>
+          <div>
+            <span className="section-label">
+              HOSTELXCHANGE MARKETPLACE
+            </span>
+
+            <h1>
+              Find what you need.
+            </h1>
 
             <p>
-              Search and compare hostels and PGs based on your preferences.
+              Buy, rent or discover useful products
+              from students around you.
             </p>
           </div>
+
+          <button className="sell-top-btn">
+            + Sell an Item
+          </button>
+
         </div>
 
-        <div className="listing-search">
-          <span>🔎</span>
+        <div className="marketplace-toolbar">
 
-          <input
-            type="text"
-            placeholder="Search by hostel, city or location..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+          <div className="marketplace-search">
+            🔎
 
-        <div className="listing-layout">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
+            />
+          </div>
 
-          <FilterBar
-            filters={filters}
-            setFilters={setFilters}
-          />
+          <div className="type-buttons">
 
-          <div className="results-section">
+            <button
+              className={
+                type === "all"
+                  ? "active"
+                  : ""
+              }
+              onClick={() => setType("all")}
+            >
+              All
+            </button>
 
-            <div className="results-header">
-              <h2>
-                {filteredHostels.length} Hostels Found
-              </h2>
+            <button
+              className={
+                type === "sale"
+                  ? "active"
+                  : ""
+              }
+              onClick={() => setType("sale")}
+            >
+              Buy
+            </button>
 
-              <span>
-                {search ? `Results for "${search}"` : "All available hostels"}
-              </span>
-            </div>
+            <button
+              className={
+                type === "rent"
+                  ? "active"
+                  : ""
+              }
+              onClick={() => setType("rent")}
+            >
+              Rent
+            </button>
 
-            {filteredHostels.length > 0 ? (
-              <div className="hostel-grid">
-                {filteredHostels.map((hostel) => (
-                  <HostelCard
-                    key={hostel.id}
-                    hostel={hostel}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="no-results">
-                <div>🏠</div>
-
-                <h3>No hostels found</h3>
-
-                <p>
-                  Try changing your search or filters.
-                </p>
-              </div>
-            )}
+            <button
+              className={
+                type === "exchange"
+                  ? "active"
+                  : ""
+              }
+              onClick={() => setType("exchange")}
+            >
+              Exchange
+            </button>
 
           </div>
+
         </div>
 
+        <div className="market-results-header">
+
+          <h2>
+            {filteredProducts.length} Listings
+          </h2>
+
+          <span>
+            Fresh listings from hostel communities
+          </span>
+
+        </div>
+
+        {filteredProducts.length > 0 ? (
+
+          <div className="product-grid marketplace-grid">
+
+            {filteredProducts.map((product) => (
+
+              <HostelCard
+                key={product.id}
+                hostel={product}
+              />
+
+            ))}
+
+          </div>
+
+        ) : (
+
+          <div className="market-no-results">
+
+            <div>📦</div>
+
+            <h3>
+              No products found
+            </h3>
+
+            <p>
+              Try another search term.
+            </p>
+
+          </div>
+
+        )}
+
       </div>
+
     </section>
   );
 }
