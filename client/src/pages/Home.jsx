@@ -1,42 +1,7 @@
 import { Link } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import HostelCard from "../components/HostelCard";
-
-const featuredHostels = [
-  {
-    id: 1,
-    name: "Sunrise Boys Hostel",
-    location: "Andheri East, Mumbai",
-    rent: "8,000",
-    distance: "1.2 km from college",
-    rating: "4.3",
-    image:
-      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80",
-    facilities: ["Wi-Fi", "Food", "CCTV"],
-  },
-  {
-    id: 2,
-    name: "Green View PG",
-    location: "Kothrud, Pune",
-    rent: "7,500",
-    distance: "0.8 km from college",
-    rating: "4.5",
-    image:
-      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=900&q=80",
-    facilities: ["Wi-Fi", "AC", "Food"],
-  },
-  {
-    id: 3,
-    name: "Student Nest",
-    location: "Powai, Mumbai",
-    rent: "6,500",
-    distance: "1.5 km from college",
-    rating: "4.2",
-    image:
-      "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&w=900&q=80",
-    facilities: ["Wi-Fi", "Laundry", "CCTV"],
-  },
-];
+import hostels from "../data/hostels";
 
 function Home() {
   return (
@@ -118,7 +83,7 @@ function Home() {
           </div>
 
           <div className="hostel-grid">
-            {featuredHostels.map((hostel) => (
+            {hostels.slice(0, 3).map((hostel) => (
               <HostelCard key={hostel.id} hostel={hostel} />
             ))}
           </div>
