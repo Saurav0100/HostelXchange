@@ -4,12 +4,12 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="container navbar-content">
-
         <Link to="/" className="logo">
-          <span className="logo-icon">HX</span>
-          <span>
-            Hostel<span>X</span>Change
-          </span>
+          <img
+            src={`${import.meta.env.BASE_URL}hostelxchange-logo.png`}
+            alt="HostelXChange - Have It. Need It. Exchange It."
+            className="brand-logo"
+          />
         </Link>
 
         <div className="nav-links">
@@ -28,7 +28,6 @@ function Navbar() {
             Get Started
           </Link>
         </div>
-
       </div>
     </nav>
   );
