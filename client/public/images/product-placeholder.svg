@@ -1,0 +1,9 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#eef4ff"></rect>
+  <circle cx="400" cy="235" r="95" fill="#dbeafe"></circle>
+  <path d="M340 255 L385 205 L420 245 L450 220 L490 275 L320 275 Z" fill="#93b4f4"></path>
+  <circle cx="435" cy="195" r="18" fill="#facc15"></circle>
+  <text x="400" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#1e3a8a">HostelXChange</text>
+  <text x="400" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#64748b">Product image unavailable</text>
+</svg>

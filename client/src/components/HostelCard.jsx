@@ -1,68 +1,72 @@
+
 import { Link } from "react-router-dom";
 
 function HostelCard({ hostel }) {
+  const product = hostel;
+
+  const price = Number(product.rent).toLocaleString("en-IN");
+
+  const imageFallback = (event) => {
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = "/images/product-placeholder.svg";
+  };
+
   return (
-    <div className="product-card">
-
+    <article className="product-card">
       <div className="product-image">
-
         <img
-          src={hostel.image}
-          alt={hostel.name}
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          onError={imageFallback}
         />
 
-        <span className={`product-type ${hostel.type}`}>
-          {hostel.type === "sale"
-            ? "FOR SALE"
-            : hostel.type === "rent"
-            ? "FOR RENT"
-            : "EXCHANGE"}
+        <span className={`product-type ${product.type}`}>
+          {product.type === "rent" ? "FOR RENT" : "FOR SALE"}
         </span>
 
-        <button className="favorite-btn">
+        <button
+          type="button"
+          className="favorite-btn"
+          aria-label={`Save ${product.name}`}
+          title="Wishlist feature coming soon"
+        >
           ♡
         </button>
-
       </div>
 
       <div className="product-content">
-
         <div className="product-category">
-          {hostel.category}
+          {product.category}
         </div>
 
-        <h3>{hostel.name}</h3>
+        <h3>{product.name}</h3>
 
         <p className="product-location">
-          📍 {hostel.location}
+          📍 {product.location}
         </p>
 
         <div className="product-bottom">
-
           <div>
-            <strong>₹{hostel.rent}</strong>
-
-            {hostel.type === "rent" && (
-              <small>/month</small>
+            <strong>₹{price}</strong>
+            {product.priceUnit && (
+              <small>/{product.priceUnit}</small>
             )}
           </div>
 
           <span className="condition">
-            {hostel.condition}
+            {product.condition}
           </span>
-
         </div>
 
         <Link
-          to={`/hostel/${hostel.id}`}
+          to={`/product/${product.id}`}
           className="details-btn"
         >
           View Product →
         </Link>
-
       </div>
-
-    </div>
+    </article>
   );
 }
 

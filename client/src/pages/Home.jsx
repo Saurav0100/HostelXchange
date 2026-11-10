@@ -1,56 +1,7 @@
 import { Link } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import HostelCard from "../components/HostelCard";
-
-const products = [
-  {
-    id: 1,
-    name: "Study Table",
-    category: "Furniture",
-    location: "ABC Hostel",
-    rent: "1,500",
-    condition: "Good Condition",
-    type: "sale",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
-  },
-
-  {
-    id: 2,
-    name: "Engineering Books Set",
-    category: "Books",
-    location: "Shree Hostel",
-    rent: "800",
-    condition: "Like New",
-    type: "sale",
-    image:
-      "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80",
-  },
-
-  {
-    id: 3,
-    name: "Bicycle",
-    category: "Transport",
-    location: "Campus Hostel",
-    rent: "500",
-    condition: "Good Condition",
-    type: "rent",
-    image:
-      "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=900&q=80",
-  },
-
-  {
-    id: 4,
-    name: "Scientific Calculator",
-    category: "Electronics",
-    location: "Royal Hostel",
-    rent: "700",
-    condition: "Excellent",
-    type: "sale",
-    image:
-      "https://images.unsplash.com/photo-1592051420422-265a8a6e5a38?auto=format&fit=crop&w=900&q=80",
-  },
-];
+import products from "../data/products";
 
 const categories = [
   {
