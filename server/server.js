@@ -1,6 +1,9 @@
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+
+const connectDB = require("./config/db");
 
 const app = express();
 
@@ -11,14 +14,25 @@ app.use(express.json());
 // Test route
 app.get("/", (req, res) => {
     res.json({
-        message: "HostelXChange API is running!"
+        message: "HostelXChange API is running!",
+        database: "Connected"
     });
 });
 
-// Port
-const PORT = process.env.PORT || 5000;
+// Start server after connecting to MongoDB
+const startServer = async () => {
+    try {
+        await connectDB();
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+        const PORT = process.env.PORT || 5000;
+
+        app.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Unable to start server:", error.message);
+        process.exit(1);
+    }
+};
+
+startServer();
