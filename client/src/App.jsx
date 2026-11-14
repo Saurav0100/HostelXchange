@@ -1,15 +1,18 @@
+
 import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
-import Hostels from "./pages/Hostels";
-import HostelDetails from "./pages/HostelDetails";
+import Marketplace from "./pages/Marketplace";
+import ProductDetails from "./pages/ProductDetails";
 import Compare from "./pages/Compare";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import StudentDashboard from "./pages/StudentDashboard";
-import OwnerDashboard from "./pages/OwnerDashboard";
-import AddHostel from "./pages/AddHostel";
+import SellerDashboard from "./pages/SellerDashboard";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
@@ -19,8 +22,8 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/hostels" element={<Hostels />} />
-          <Route path="/product/:id" element={<HostelDetails />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -28,8 +31,11 @@ function App() {
             path="/student-dashboard"
             element={<StudentDashboard />}
           />
-          <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-          <Route path="/add-hostel" element={<AddHostel />} />
+          <Route
+            path="/seller-dashboard"
+            element={<SellerDashboard />}
+          />
+          <Route path="/add-product" element={<AddProduct />} />
         </Routes>
       </main>
 
