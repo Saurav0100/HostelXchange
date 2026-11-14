@@ -1,68 +1,36 @@
-
 import { Link } from "react-router-dom";
 
-function HostelCard({ hostel }) {
-  const product = hostel;
+function ProductCard({ product }) {
+  const price = Number(product.price || 0).toLocaleString("en-IN");
 
-  const price = Number(product.rent).toLocaleString("en-IN");
-
-  const imageFallback = (event) => {
-    event.currentTarget.onerror = null;
-    event.currentTarget.src = "/images/product-placeholder.svg";
-  };
+  const image = product.images?.[0] || "/images/product-placeholder.svg";
 
   return (
     <article className="product-card">
       <div className="product-image">
-        <img
-          src={product.image}
-          alt={product.name}
-          loading="lazy"
-          onError={imageFallback}
-        />
+        <img src={image} alt={product.title} loading="lazy" />
 
-        <span className={`product-type ${product.type}`}>
-          {product.type === "rent" ? "FOR RENT" : "FOR SALE"}
+        <span className="product-type">
+          {product.listingType?.toUpperCase()}
         </span>
-
-        <button
-          type="button"
-          className="favorite-btn"
-          aria-label={`Save ${product.name}`}
-          title="Wishlist feature coming soon"
-        >
-          ♡
-        </button>
       </div>
 
       <div className="product-content">
-        <div className="product-category">
-          {product.category}
-        </div>
+        <div className="product-category">{product.category}</div>
 
-        <h3>{product.name}</h3>
+        <h3>{product.title}</h3>
 
-        <p className="product-location">
-          📍 {product.location}
-        </p>
+        <p className="product-location">📍 {product.location}</p>
 
         <div className="product-bottom">
-          <div>
-            <strong>₹{price}</strong>
-            {product.priceUnit && (
-              <small>/{product.priceUnit}</small>
-            )}
-          </div>
+          <strong>
+            {product.listingType === "Exchange" ? "Exchange" : `₹${price}`}
+          </strong>
 
-          <span className="condition">
-            {product.condition}
-          </span>
+          <span className="condition">{product.condition}</span>
         </div>
 
-        <Link
-          to={`/product/${product.id}`}
-          className="details-btn"
-        >
+        <Link to={`/product/${product._id}`} className="details-btn">
           View Product →
         </Link>
       </div>
@@ -70,4 +38,4 @@ function HostelCard({ hostel }) {
   );
 }
 
-export default HostelCard;
+export default ProductCard;

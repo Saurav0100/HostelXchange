@@ -1,22 +1,46 @@
-
 import { Link, useParams } from "react-router-dom";
-import products from "../data/products";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getProductById } from "../services/api";
 
 function HostelDetails() {
   const { id } = useParams();
 
-  const product = products.find(
-    (item) => String(item.id) === id
-  );
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!product) {
+  useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        setLoading(true);
+        const data = await getProductById(id);
+        setProduct(data.product);
+        setError("");
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <section className="details-page">
+        <div className="container">Loading product...</div>
+      </section>
+    );
+  }
+
+  if (error || !product) {
     return (
       <section className="details-page">
         <div className="container not-found">
           <h1>Product Not Found</h1>
-          <p>This product may have been removed or is unavailable.</p>
-          <Link to="/hostels" className="details-btn">
+          <p>{error || "This product is unavailable."}</p>
+          <Link to="/marketplace" className="details-btn">
             Back to Marketplace
           </Link>
         </div>
@@ -24,79 +48,72 @@ function HostelDetails() {
     );
   }
 
-  const price = Number(product.rent).toLocaleString("en-IN");
-
-  const imageFallback = (event) => {
-    event.currentTarget.onerror = null;
-    event.currentTarget.src = "/images/product-placeholder.svg";
-  };
+  const image = product.images?.[0] || "/images/product-placeholder.svg";
+  const sellerName = product.seller?.name || "Student Seller";
 
   return (
     <section className="details-page">
       <div className="container">
-        <Link to="/hostels" className="back-link">
+        <Link to="/marketplace" className="back-link">
           ← Back to Marketplace
         </Link>
 
         <div className="details-grid">
           <div className="details-image-wrapper">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="details-image"
-              onError={imageFallback}
-            />
+            <img src={image} alt={product.title} className="details-image" />
 
             <div className="details-rating">
-              {product.type === "rent" ? "FOR RENT" : "FOR SALE"}
+              {product.listingType?.toUpperCase()}
             </div>
           </div>
 
           <div className="details-content">
             <span className="section-label">
-              {product.category.toUpperCase()}
+              {product.category?.toUpperCase()}
             </span>
 
-            <h1>{product.name}</h1>
+            <h1>{product.title}</h1>
 
             <p className="details-location">
               📍 Available at {product.location}
             </p>
 
             <div className="details-price">
-              <strong>₹{price}</strong>
-              <span>
-                {product.priceUnit
-                  ? `/ ${product.priceUnit}`
-                  : " one-time price"}
-              </span>
+              <strong>
+                {product.listingType === "Exchange"
+                  ? "Exchange"
+                  : `₹${Number(product.price || 0).toLocaleString("en-IN")}`}
+              </strong>
+
+              {product.listingType !== "Exchange" && (
+                <span>{product.priceUnit ? `/ ${product.priceUnit}` : ""}</span>
+              )}
             </div>
 
             <div className="product-detail-condition">
               Condition: <strong>{product.condition}</strong>
             </div>
 
-            <p className="details-description">
-              {product.description}
-            </p>
+            <p className="details-description">{product.description}</p>
+
+            {product.exchangePreference && (
+              <p>Exchange preference: {product.exchangePreference}</p>
+            )}
 
             <div className="details-actions">
               <button
                 type="button"
                 className="primary-action"
-                onClick={() =>
+                onClick={() => {
                   window.alert(
-                    "Seller contact will be enabled when the backend and messaging features are connected."
-                  )
-                }
+                    "Seller messaging will be available in a future update.",
+                  );
+                }}
               >
                 Contact Seller
               </button>
 
-              <Link
-                to="/hostels"
-                className="secondary-action"
-              >
+              <Link to="/marketplace" className="secondary-action">
                 Browse More
               </Link>
             </div>
@@ -110,7 +127,7 @@ function HostelDetails() {
             <div className="info-list">
               <div>
                 <span>Product</span>
-                <strong>{product.name}</strong>
+                <strong>{product.title}</strong>
               </div>
 
               <div>
@@ -120,9 +137,7 @@ function HostelDetails() {
 
               <div>
                 <span>Listing Type</span>
-                <strong>
-                  {product.type === "rent" ? "For Rent" : "For Sale"}
-                </strong>
+                <strong>{product.listingType}</strong>
               </div>
 
               <div>
@@ -134,19 +149,11 @@ function HostelDetails() {
                 <span>Pickup Location</span>
                 <strong>{product.location}</strong>
               </div>
-            </div>
-          </div>
 
-          <div className="details-box">
-            <h2>Item Features</h2>
-
-            <div className="facility-list">
-              {product.features.map((feature) => (
-                <div className="facility-item" key={feature}>
-                  <span>✓</span>
-                  {feature}
-                </div>
-              ))}
+              <div>
+                <span>Status</span>
+                <strong>{product.status}</strong>
+              </div>
             </div>
           </div>
 
@@ -155,19 +162,19 @@ function HostelDetails() {
 
             <div className="seller-profile">
               <div className="seller-avatar">
-                {product.seller.charAt(0)}
+                {sellerName.charAt(0).toUpperCase()}
               </div>
 
               <div>
-                <strong>{product.seller}</strong>
+                <strong>{sellerName}</strong>
                 <p>HostelXChange Community Member</p>
                 <small>📍 {product.location}</small>
               </div>
             </div>
 
             <p className="seller-note">
-              Contact the seller to confirm availability,
-              condition and pickup arrangements.
+              Contact the seller to confirm availability, condition and pickup
+              arrangements.
             </p>
           </div>
 
@@ -177,8 +184,8 @@ function HostelDetails() {
             <ul className="product-tips">
               <li>Inspect the product before making payment.</li>
               <li>Confirm the final price and pickup time.</li>
-              <li>Follow your hostel's rules for the item.</li>
-              <li>For rentals, agree on the rental period and return date.</li>
+              <li>Agree on rental duration and return date, if applicable.</li>
+              <li>Arrange a safe handover with the seller.</li>
             </ul>
           </div>
         </div>

@@ -9,7 +9,7 @@ function SearchBar() {
     e.preventDefault();
 
     navigate(
-      `/hostels?search=${encodeURIComponent(search)}`
+      `/marketplace?search=${encodeURIComponent(search)}`
     );
   };
 

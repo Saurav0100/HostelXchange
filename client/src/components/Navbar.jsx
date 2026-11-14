@@ -14,7 +14,7 @@ function Navbar() {
 
         <div className="nav-links">
           <Link to="/">Home</Link>
-          <Link to="/hostels">Marketplace</Link>
+          <Link to="/marketplace">Marketplace</Link>
           <Link to="/compare">Exchange</Link>
           <Link to="/about">About</Link>
         </div>

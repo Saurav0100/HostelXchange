@@ -14,7 +14,7 @@ function Footer() {
 
         <div>
           <h4>Platform</h4>
-          <a href="/hostels">Find Hostel</a>
+          <a href="/marketplace">Find Hostel</a>
           <a href="/compare">Compare</a>
           <a href="/register">Register</a>
         </div>
