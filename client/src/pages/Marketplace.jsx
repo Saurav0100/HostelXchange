@@ -3,12 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from "../services/api";
 
-function Hostels() {
+function Marketplace() {
   const [searchParams] = useSearchParams();
 
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [type, setType] = useState("all");
+  const [category, setCategory] = useState(searchParams.get("category") || "");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -20,7 +21,7 @@ function Hostels() {
         setProducts(data.products || []);
         setError("");
       } catch (err) {
-        setError(err.message);
+        setError(err.message || "Unable to load products.");
       } finally {
         setLoading(false);
       }
@@ -41,9 +42,12 @@ function Hostels() {
       const matchesType =
         type === "all" || product.listingType?.toLowerCase() === type;
 
-      return matchesSearch && matchesType;
+      const matchesCategory =
+        !category || product.category?.toLowerCase() === category.toLowerCase();
+
+      return matchesSearch && matchesType && matchesCategory;
     });
-  }, [products, search, type]);
+  }, [products, search, type, category]);
 
   return (
     <section className="marketplace-page">
@@ -51,9 +55,7 @@ function Hostels() {
         <div className="marketplace-header">
           <div>
             <span className="section-label">HOSTELXCHANGE MARKETPLACE</span>
-
             <h1>Find What You Need.</h1>
-
             <p>Buy or rent useful products from your student community.</p>
           </div>
         </div>
@@ -61,7 +63,6 @@ function Hostels() {
         <div className="marketplace-toolbar">
           <div className="marketplace-search">
             <span>🔎</span>
-
             <input
               type="search"
               placeholder="Search books, furniture, electronics..."
@@ -117,4 +118,4 @@ function Hostels() {
   );
 }
 
-export default Hostels;
+export default Marketplace;
