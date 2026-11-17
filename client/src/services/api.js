@@ -43,3 +43,27 @@ export const registerUser = (userData) =>
     method: "POST",
     body: JSON.stringify(userData),
   });
+
+export const getMyProducts = (token) =>
+  apiRequest("/products/my-listings", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+export const updateProduct = (id, product, token) =>
+  apiRequest(`/products/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(product),
+  });
+
+export const deleteProduct = (id, token) =>
+  apiRequest(`/products/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
