@@ -1982,7 +1982,6 @@ select {
   }
 }
 
-
 /* ==========================================
    HOSTELXCHANGE — CAMPUS MARKETPLACE THEME
    ========================================== */
@@ -2145,7 +2144,9 @@ a {
   border-radius: 10px;
   box-shadow: 3px 3px 0 var(--hx-border);
   font-weight: 800;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .market-search button:hover,
@@ -2253,7 +2254,9 @@ a {
   border: 2px solid var(--hx-border);
   border-radius: 13px;
   box-shadow: 4px 4px 0 var(--hx-border);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .category-card:nth-child(3n + 2) {
@@ -2297,7 +2300,9 @@ a {
   border: 2px solid var(--hx-border);
   border-radius: 12px;
   box-shadow: 4px 4px 0 var(--hx-border);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .product-card:hover {
@@ -2538,7 +2543,6 @@ textarea:focus-visible {
   }
 }
 
-
 /* HostelXChange brand logo */
 .navbar .logo {
   display: inline-flex;
@@ -2769,5 +2773,288 @@ textarea:focus-visible {
 
   .auth-card {
     padding: 24px;
+  }
+}
+
+/* ==========================================
+   HOSTELXCHANGE - ADD PRODUCT PAGE
+========================================== */
+
+/* Main page background and layout */
+
+.container.section:has(.add-product-form) {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 65px 24px 80px;
+  background: #fff9eb;
+  min-height: 75vh;
+}
+
+/* Colorful heading */
+
+.container.section:has(.add-product-form) > h1 {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 14px;
+  padding: 12px 28px;
+
+  color: #103f30;
+  font-size: clamp(32px, 4vw, 43px);
+  font-weight: 850;
+  letter-spacing: -1.5px;
+  text-align: center;
+
+  background: linear-gradient(120deg, #fff0a6 0%, #ffdc45 48%, #ffe98b 100%);
+
+  border-radius: 16px;
+  box-shadow: 5px 5px 0 #103f30;
+}
+
+/* Green accent under heading */
+
+.container.section:has(.add-product-form) > h1::after {
+  content: "";
+  display: block;
+  width: 65px;
+  height: 5px;
+  margin: 10px auto 0;
+  border-radius: 10px;
+  background: #087f62;
+}
+
+/* Subtitle */
+
+.container.section:has(.add-product-form) > p {
+  width: fit-content;
+  max-width: 90%;
+  box-sizing: border-box;
+  margin: 22px auto 0;
+  padding: 12px 24px;
+
+  color: #ffffff;
+  background: linear-gradient(110deg, #103f30, #087f62);
+
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  box-shadow: 0 5px 14px rgba(16, 63, 48, 0.15);
+}
+
+/* ==========================================
+   FORM CARD
+========================================== */
+
+.add-product-form {
+  width: 100%;
+  max-width: 720px;
+  box-sizing: border-box;
+  margin: 38px auto 48px;
+  padding: 38px 42px;
+
+  background: #ffffff;
+  border: 1px solid #e9e9dc;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(18, 61, 46, 0.09);
+
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+}
+
+/* Individual form fields */
+
+.add-product-form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* Labels */
+
+.add-product-form label {
+  color: #173f32;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Inputs, dropdowns and textareas */
+
+.add-product-form input,
+.add-product-form select,
+.add-product-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 15px;
+
+  background: #fbfcf8;
+  border: 1px solid #dce5dc;
+  border-radius: 10px;
+
+  color: #203b30;
+  font-family: inherit;
+  font-size: 15px;
+
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Placeholder text */
+
+.add-product-form input::placeholder,
+.add-product-form textarea::placeholder {
+  color: #9ba99f;
+}
+
+/* Hover effect */
+
+.add-product-form input:hover,
+.add-product-form select:hover,
+.add-product-form textarea:hover {
+  border-color: #9eb9a8;
+  background: #ffffff;
+}
+
+/* Focus effect */
+
+.add-product-form input:focus,
+.add-product-form select:focus,
+.add-product-form textarea:focus {
+  border-color: #087f62;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(8, 127, 98, 0.1);
+}
+
+/* Textarea */
+
+.add-product-form textarea {
+  min-height: 115px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Dropdown */
+
+.add-product-form select {
+  cursor: pointer;
+}
+
+/* ==========================================
+   PUBLISH BUTTON
+========================================== */
+
+.add-product-form button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 16px 22px;
+
+  background: #ffdc45;
+  color: #173f32;
+
+  border: 2px solid #173f32;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 #173f32;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-product-form button:hover {
+  background: #ffce22;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #173f32;
+}
+
+.add-product-form button:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.add-product-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 4px 4px 0 #173f32;
+}
+
+/* ==========================================
+   CANCEL LINK
+========================================== */
+
+.add-product-form > a {
+  display: block;
+  text-align: center;
+
+  color: #39715c;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.add-product-form > a:hover {
+  color: #103f30;
+  text-decoration: underline;
+}
+
+/* ==========================================
+   ERROR MESSAGE
+========================================== */
+
+.add-product-form .form-error {
+  margin: 0;
+  padding: 13px 15px;
+
+  border: 1px solid #f2c4c4;
+  border-radius: 9px;
+  background: #fff0f0;
+
+  color: #b42318;
+  font-size: 14px;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 600px) {
+  .container.section:has(.add-product-form) {
+    padding: 42px 16px 55px;
+  }
+
+  .container.section:has(.add-product-form) > h1 {
+    padding: 10px 18px;
+    font-size: 30px;
+  }
+
+  .container.section:has(.add-product-form) > p {
+    max-width: 100%;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .add-product-form {
+    padding: 25px 19px;
+    margin-top: 28px;
+    gap: 19px;
+    border-radius: 15px;
+  }
+
+  .add-product-form input,
+  .add-product-form select,
+  .add-product-form textarea {
+    padding: 12px;
+    font-size: 14px;
   }
 }
