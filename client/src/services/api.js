@@ -67,3 +67,28 @@ export const deleteProduct = (id, token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const createTransaction = (transactionData, token) =>
+  apiRequest("/transactions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(transactionData),
+  });
+
+export const getMyTransactions = (token) =>
+  apiRequest("/transactions/my-transactions", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+export const updateTransactionStatus = (id, status, token) =>
+  apiRequest(`/transactions/${id}/status`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status }),
+  });
