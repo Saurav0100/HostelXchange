@@ -3588,44 +3588,63 @@ textarea:focus-visible {
 
 /* Password visibility toggle */
 
-.password-input-wrapper {
+/* ==========================================
+   PASSWORD VISIBILITY BUTTON FIX
+========================================== */
+
+.auth-form .password-input-wrapper {
   position: relative;
   width: 100%;
 }
 
-.password-input-wrapper input {
+.auth-form .password-input-wrapper input {
   width: 100%;
   padding-right: 52px;
 }
 
-.password-toggle {
+/* Eye toggle button */
+
+.auth-form .password-input-wrapper .password-toggle {
   position: absolute;
   top: 50%;
-  right: 14px;
+  right: 12px;
   transform: translateY(-50%);
 
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   padding: 0;
+  margin: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: none;
   background: transparent;
   color: #103f30;
+  border: none;
+  border-radius: 50%;
+  box-shadow: none;
 
-  font-size: 19px;
+  font-size: 18px;
+  line-height: 1;
+
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.password-toggle:hover {
+.auth-form .password-input-wrapper .password-toggle:hover {
   background: #eaf4ed;
-  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: none;
 }
 
-.password-toggle:focus-visible {
+.auth-form .password-input-wrapper .password-toggle:focus-visible {
   outline: 2px solid #087f62;
-  border-radius: 50%;
+  outline-offset: 2px;
+}
+
+.auth-form .password-input-wrapper .password-toggle:active {
+  transform: translateY(-50%);
+  box-shadow: none;
 }
