@@ -1,30 +1,37 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../services/api";
 
 function Register() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
-    hostel: "",
+    studentId: "",
+    college: "",
     password: "",
     confirmPassword: "",
   });
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setForm((previous) => ({
+      ...previous,
       [e.target.name]: e.target.value,
-    });
+    }));
 
     setError("");
     setMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setMessage("");
 
     if (form.password.length < 8) {
       setError("Password must contain at least 8 characters.");
@@ -36,10 +43,47 @@ function Register() {
       return;
     }
 
-    setError("");
-    setMessage(
-      "Your form is valid! Account creation will be enabled when the backend is connected."
-    );
+    try {
+      setLoading(true);
+
+      const userData = {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        studentId: form.studentId.trim(),
+        college: form.college.trim(),
+        password: form.password,
+      };
+
+      const data = await registerUser(userData);
+
+      // Automatically log in if registration returns a JWT.
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+
+        navigate("/seller-dashboard");
+      } else {
+        setMessage(
+          "Your account has been created successfully! Please log in.",
+        );
+
+        setForm({
+          name: "",
+          email: "",
+          studentId: "",
+          college: "",
+          password: "",
+          confirmPassword: "",
+        });
+      }
+    } catch (err) {
+      setError(err.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,7 +100,7 @@ function Register() {
         <h1>Create your account</h1>
 
         <p className="auth-subtitle">
-          Buy, sell, rent and exchange products with your hostel community.
+          Buy, sell, rent and exchange products with your student community.
         </p>
 
         <form onSubmit={handleSubmit} className="auth-form">
@@ -89,13 +133,26 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="hostel">Hostel / College</label>
+            <label htmlFor="studentId">Student ID</label>
             <input
-              id="hostel"
-              name="hostel"
+              id="studentId"
+              name="studentId"
               type="text"
-              placeholder="Enter your hostel or college"
-              value={form.hostel}
+              placeholder="Enter your student ID"
+              value={form.studentId}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="college">College Name</label>
+            <input
+              id="college"
+              name="college"
+              type="text"
+              placeholder="Enter your college name"
+              value={form.college}
               onChange={handleChange}
               required
             />
@@ -103,31 +160,59 @@ function Register() {
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="At least 8 characters"
-              value={form.password}
-              onChange={handleChange}
-              autoComplete="new-password"
-              minLength={8}
-              required
-            />
+
+            <div className="password-input-wrapper">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="At least 8 characters"
+                value={form.password}
+                onChange={handleChange}
+                autoComplete="new-password"
+                minLength={8}
+                required
+              />
+
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword((previous) => !previous)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? "🙈" : "👁"}
+              </button>
+            </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              placeholder="Enter password again"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              autoComplete="new-password"
-              required
-            />
+
+            <div className="password-input-wrapper">
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Enter password again"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                autoComplete="new-password"
+                required
+              />
+
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowConfirmPassword((previous) => !previous)}
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
+              >
+                {showConfirmPassword ? "🙈" : "👁"}
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -142,18 +227,17 @@ function Register() {
             </p>
           )}
 
-          <button type="submit" className="auth-submit">
-            Create Account →
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? "Creating Account..." : "Create Account →"}
           </button>
         </form>
 
         <p className="auth-switch">
-          Already have an account?{" "}
-          <Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
 
         <p className="auth-terms">
-          Join HostelXChange and give useful products a second life.
+          Join HostelXchange and give useful products a second life.
         </p>
       </div>
     </section>

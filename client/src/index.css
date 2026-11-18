@@ -3365,7 +3365,6 @@ textarea:focus-visible {
   }
 }
 
-
 /* Seller Dashboard - Error Message Spacing */
 
 .dashboard-error {
@@ -3421,4 +3420,212 @@ textarea:focus-visible {
     margin: 35px auto 30px;
     padding: 22px 16px;
   }
+}
+
+/* ==========================================
+   HOSTELXCHANGE - AUTHENTICATION PAGES
+========================================== */
+
+.auth-page {
+  min-height: 75vh;
+  box-sizing: border-box;
+  padding: 65px 20px 80px;
+  background: #fff9eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  box-sizing: border-box;
+  padding: 38px;
+  background: #ffffff;
+  border: 1px solid #e9e9dc;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(18, 61, 46, 0.09);
+}
+
+.auth-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-eyebrow {
+  color: #087f62;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.auth-heading h1 {
+  margin: 12px 0;
+  color: #103f30;
+  font-size: 30px;
+}
+
+.auth-heading p {
+  color: #66756d;
+  line-height: 1.6;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.auth-form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.auth-form label {
+  color: #173f32;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid #dce5dc;
+  border-radius: 10px;
+  background: #fbfcf8;
+  color: #203b30;
+  font: inherit;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.auth-form input:focus {
+  border-color: #087f62;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(8, 127, 98, 0.1);
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #173f32;
+  border-radius: 10px;
+  background: #ffdc45;
+  color: #173f32;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #173f32;
+  transition: 0.2s ease;
+}
+
+.auth-form button:hover {
+  background: #ffce22;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #173f32;
+}
+
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-error {
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff0f0;
+  color: #b42318;
+  font-size: 14px;
+}
+
+.auth-switch {
+  margin: 25px 0 0;
+  color: #66756d;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-switch a {
+  color: #087f62;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .auth-page {
+    padding: 40px 16px;
+  }
+
+  .auth-card {
+    padding: 26px 20px;
+  }
+
+  .auth-heading h1 {
+    font-size: 25px;
+  }
+}
+
+/* Registration success message */
+
+.auth-success {
+  margin: 0;
+  padding: 13px 15px;
+  border: 1px solid #b7dfc5;
+  border-radius: 9px;
+  background: #edf9f0;
+  color: #176b3a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Password visibility toggle */
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 52px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+  color: #103f30;
+
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  background: #eaf4ed;
+  border-radius: 50%;
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid #087f62;
+  border-radius: 50%;
 }
