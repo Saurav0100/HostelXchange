@@ -3649,9 +3649,6 @@ textarea:focus-visible {
   box-shadow: none;
 }
 
-
-
-
 /* ==========================================
    PRODUCT TRANSACTION REQUEST
 ========================================== */
@@ -3705,7 +3702,7 @@ textarea:focus-visible {
 .transaction-extra-fields textarea:focus {
   outline: none;
   border-color: #087f62;
-  box-shadow: 0 0 0 3px rgba(8, 127, 98, 0.10);
+  box-shadow: 0 0 0 3px rgba(8, 127, 98, 0.1);
 }
 
 .transaction-request-form .primary-action {
@@ -3791,10 +3788,6 @@ textarea:focus-visible {
     padding: 16px;
   }
 }
-
-
-
-
 
 /* ==========================================
    HOSTELXCHANGE - TRANSACTION DASHBOARDS
@@ -4045,4 +4038,52 @@ textarea:focus-visible {
   .buyer-transaction-actions {
     align-items: stretch;
   }
+}
+
+/* ==========================================
+   HOSTELXCHANGE - Nave-Bar Styling 
+========================================== */
+
+.dashboard-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dashboard-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.dashboard-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 200px;
+  background: #fff9eb;
+  border: 1px solid #e5e0d3;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  z-index: 1000;
+}
+
+.dashboard-dropdown-menu a {
+  display: block;
+  padding: 11px 12px;
+  color: #103f30;
+  text-decoration: none;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.dashboard-dropdown-menu a:hover {
+  background: #e8f1e9;
 }
