@@ -4044,46 +4044,206 @@ textarea:focus-visible {
    HOSTELXCHANGE - Nave-Bar Styling 
 ========================================== */
 
+/* Profile dropdown */
+.profile-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-avatar-btn {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  padding: 0;
+  border: 2px solid #103f30;
+  border-radius: 50%;
+  background: #ffdc45;
+  color: #103f30;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.profile-avatar-btn:hover {
+  background: #f5ce30;
+  transform: translateY(-1px);
+}
+
+.profile-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 255px;
+  padding: 10px;
+  background: #fff9eb;
+  border: 1px solid #e5e0d3;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(16, 63, 48, 0.18);
+  z-index: 1100;
+}
+
+.profile-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 8px;
+}
+
+.profile-menu-avatar {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  background: #103f30;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.profile-menu-user {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.profile-menu-user strong {
+  color: #103f30;
+  font-size: 14px;
+}
+
+.profile-menu-user span {
+  color: #66736c;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.profile-menu-divider {
+  height: 1px;
+  background: #e5e0d3;
+  margin: 7px 0;
+}
+
+.profile-dropdown-menu a,
+.profile-logout-btn {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #103f30;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.profile-dropdown-menu a:hover {
+  background: #eaf2e9;
+}
+
+.profile-logout-btn {
+  color: #b42318;
+}
+
+.profile-logout-btn:hover {
+  background: #fcebea;
+}
+
+/* Keep the Dashboard dropdown above page content */
+
+/* Dashboard dropdown container */
 .dashboard-dropdown {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
 
+/* Dashboard button */
 .dashboard-dropdown-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 8px 12px;
+  margin: 0;
   border: none;
+  outline: none;
+  border-radius: 6px;
   background: transparent;
-  color: inherit;
-  font: inherit;
+  color: #103f30;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: none;
   cursor: pointer;
 }
 
+.dashboard-dropdown-btn:hover,
+.dashboard-dropdown-btn:focus {
+  background: #eaf2e9;
+  color: #087f62;
+  box-shadow: none;
+}
+
+/* Dropdown menu */
 .dashboard-dropdown-menu {
   position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  min-width: 200px;
+  top: calc(100% + 10px);
+  left: 0;
+  right: auto;
+  width: 215px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+  padding: 8px;
   background: #fff9eb;
   border: 1px solid #e5e0d3;
   border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  padding: 8px;
-  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(16, 63, 48, 0.16);
+  z-index: 1100;
 }
 
+/* Individual dropdown links */
 .dashboard-dropdown-menu a {
   display: block;
+  width: 100%;
+  box-sizing: border-box;
   padding: 11px 12px;
+  margin: 0;
   color: #103f30;
-  text-decoration: none;
+  background: transparent;
   border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.4;
   white-space: nowrap;
 }
 
 .dashboard-dropdown-menu a:hover {
-  background: #e8f1e9;
+  background: #eaf2e9;
+  color: #087f62;
+}
+
+/* Small-screen adjustments */
+@media (max-width: 768px) {
+  .profile-dropdown-menu {
+    right: 0;
+    width: 240px;
+  }
 }
