@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
     },
 
+    studentId: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
     college: {
       type: String,
       required: true,

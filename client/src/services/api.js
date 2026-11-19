@@ -92,3 +92,19 @@ export const updateTransactionStatus = (id, status, token) =>
     },
     body: JSON.stringify({ status }),
   });
+
+export const getMyProfile = (token) =>
+  apiRequest("/auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+export const updateMyProfile = (profileData, token) =>
+  apiRequest("/auth/me", {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(profileData),
+  });
