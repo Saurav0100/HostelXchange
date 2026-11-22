@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getMyProfile, updateMyProfile } from "../services/api";
+import { getMyProfile, updateMyProfile, changePassword } from "../services/api";
 
 function Profile() {
   const [profile, setProfile] = useState({
@@ -24,6 +24,22 @@ function Profile() {
   const [message, setMessage] = useState("");
 
   const token = localStorage.getItem("token");
+
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+  });
+
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -137,6 +153,83 @@ function Profile() {
       setError(err.message || "Unable to update your profile.");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handlePasswordChange = (event) => {
+    setPasswordForm((previous) => ({
+      ...previous,
+      [event.target.name]: event.target.value,
+    }));
+
+    setPasswordError("");
+    setPasswordMessage("");
+  };
+
+  const togglePasswordVisibility = (field) => {
+    setShowPasswords((previous) => ({
+      ...previous,
+      [field]: !previous[field],
+    }));
+  };
+
+  const handlePasswordSubmit = async (event) => {
+    event.preventDefault();
+
+    setPasswordError("");
+    setPasswordMessage("");
+
+    if (passwordForm.newPassword.length < 8) {
+      setPasswordError("New password must contain at least 8 characters.");
+      return;
+    }
+
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordError("New passwords do not match.");
+      return;
+    }
+
+    if (passwordForm.currentPassword === passwordForm.newPassword) {
+      setPasswordError("New password must be different.");
+      return;
+    }
+
+    try {
+      setPasswordLoading(true);
+
+      const data = await changePassword(
+        {
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword,
+        },
+        token,
+      );
+
+      setPasswordMessage(data.message);
+
+      setPasswordForm({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+
+      setShowPasswords({
+        current: false,
+        new: false,
+        confirm: false,
+      });
+
+      // Log out after password change.
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      setTimeout(() => {
+        window.location.href = "/HostelXchange/login";
+      }, 2000);
+    } catch (err) {
+      setPasswordError(err.message || "Unable to change password.");
+    } finally {
+      setPasswordLoading(false);
     }
   };
 
@@ -299,6 +392,91 @@ function Profile() {
               {message}
             </p>
           )}
+        </div>
+
+        <div className="profile-divider" />
+
+        <div className="profile-details">
+          <h3>Security & Password</h3>
+
+          <p className="password-section-description">
+            Keep your account secure by updating your password regularly.
+          </p>
+
+          <form className="profile-form" onSubmit={handlePasswordSubmit}>
+            {[
+              {
+                name: "currentPassword",
+                label: "Current Password",
+                key: "current",
+              },
+              {
+                name: "newPassword",
+                label: "New Password",
+                key: "new",
+              },
+              {
+                name: "confirmPassword",
+                label: "Confirm New Password",
+                key: "confirm",
+              },
+            ].map((field) => (
+              <div className="profile-field" key={field.name}>
+                <label htmlFor={field.name}>{field.label}</label>
+
+                <div className="password-input-wrapper">
+                  <input
+                    id={field.name}
+                    name={field.name}
+                    type={showPasswords[field.key] ? "text" : "password"}
+                    value={passwordForm[field.name]}
+                    onChange={handlePasswordChange}
+                    autoComplete="new-password"
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => togglePasswordVisibility(field.key)}
+                    aria-label={
+                      showPasswords[field.key]
+                        ? "Hide password"
+                        : "Show password"
+                    }
+                  >
+                    {showPasswords[field.key] ? "🙈" : "👁"}
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <p className="password-hint">
+              Your new password must contain at least 8 characters.
+            </p>
+
+            {passwordError && (
+              <p className="profile-alert profile-error" role="alert">
+                {passwordError}
+              </p>
+            )}
+
+            {passwordMessage && (
+              <p className="profile-alert profile-success" role="status">
+                {passwordMessage}
+              </p>
+            )}
+
+            <div className="profile-form-actions">
+              <button
+                type="submit"
+                className="profile-save-btn"
+                disabled={passwordLoading}
+              >
+                {passwordLoading ? "Updating..." : "Update Password"}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>

@@ -4530,3 +4530,50 @@ textarea:focus-visible {
     width: 100%;
   }
 }
+
+/* Password settings section */
+
+.password-section-description {
+  color: #68756d;
+  font-size: 14px;
+  margin: -10px 0 22px;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 17px;
+  padding: 5px;
+}
+
+.password-toggle:hover {
+  background: transparent;
+}
+
+.password-hint {
+  grid-column: 1 / -1;
+  color: #758078;
+  font-size: 12px;
+  margin: -8px 0 0;
+}
+
+@media (max-width: 600px) {
+  .password-hint {
+    grid-column: 1;
+  }
+}
