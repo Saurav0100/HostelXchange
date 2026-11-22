@@ -1,9 +1,7 @@
-
 import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
+import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Marketplace from "./pages/Marketplace";
 import ProductDetails from "./pages/ProductDetails";
@@ -27,14 +25,9 @@ function App() {
           <Route path="/compare" element={<Compare />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/student-dashboard"
-            element={<StudentDashboard />}
-          />
-          <Route
-            path="/seller-dashboard"
-            element={<SellerDashboard />}
-          />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/seller-dashboard" element={<SellerDashboard />} />
           <Route path="/add-product" element={<AddProduct />} />
         </Routes>
       </main>
