@@ -94,17 +94,26 @@ export const updateTransactionStatus = (id, status, token) =>
   });
 
 export const getMyProfile = (token) =>
-  apiRequest("/auth/me", {
+  apiRequest("/auth/profile", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
 export const updateMyProfile = (profileData, token) =>
-  apiRequest("/auth/me", {
+  apiRequest("/auth/profile", {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(profileData),
+  });
+
+export const changePassword = (passwordData, token) =>
+  apiRequest("/auth/change-password", {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(passwordData),
   });
