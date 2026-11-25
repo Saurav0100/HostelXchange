@@ -1,7 +1,33 @@
 const Transaction = require("../models/Transaction");
 const Product = require("../models/Product");
+const Notification = require("../models/Notification");
 
 const getUserId = (req) => req.user?.id || req.user?._id;
+
+const createNotificationSafely = async ({
+  recipient,
+  sender,
+  transaction,
+  product,
+  type,
+  title,
+  message,
+}) => {
+  try {
+    await Notification.create({
+      recipient,
+      sender,
+      transaction,
+      product,
+      type,
+      title,
+      message,
+    });
+  } catch (error) {
+    // Notification failure must not fail the transaction operation.
+    console.error("Notification creation failed:", error.message);
+  }
+};
 
 // Create a transaction request.
 exports.createTransaction = async (req, res) => {
@@ -68,6 +94,16 @@ exports.createTransaction = async (req, res) => {
         rentalEndDate: product.listingType === "Rent" ? rentalEndDate : null,
         exchangeDetails:
           product.listingType === "Exchange" ? exchangeDetails.trim() : "",
+      });
+
+      await createNotificationSafely({
+        recipient: product.seller,
+        sender: userId,
+        transaction: transaction._id,
+        product: product._id,
+        type: "NEW_REQUEST",
+        title: "New Transaction Request",
+        message: `You received a new ${product.listingType.toLowerCase()} request for "${product.title}".`,
       });
 
       const populatedTransaction = await Transaction.findById(transaction._id)
@@ -176,6 +212,44 @@ exports.updateTransactionStatus = async (req, res) => {
     if (status === "Completed") {
       await Product.findByIdAndUpdate(transaction.product, {
         status: transaction.listingType === "Rent" ? "Available" : "Completed",
+      });
+    }
+
+    const notificationDetails = {
+      Accepted: {
+        recipient: transaction.buyer,
+        type: "REQUEST_ACCEPTED",
+        title: "Request Accepted",
+        message: "Your transaction request has been accepted by the seller.",
+      },
+      Rejected: {
+        recipient: transaction.buyer,
+        type: "REQUEST_REJECTED",
+        title: "Request Rejected",
+        message: "Your transaction request has been rejected by the seller.",
+      },
+      Cancelled: {
+        recipient: transaction.seller,
+        type: "REQUEST_CANCELLED",
+        title: "Request Cancelled",
+        message: "The buyer has cancelled the transaction request.",
+      },
+      Completed: {
+        recipient: transaction.seller,
+        type: "TRANSACTION_COMPLETED",
+        title: "Transaction Completed",
+        message: "The buyer has marked the transaction as completed.",
+      },
+    };
+
+    const details = notificationDetails[status];
+
+    if (details) {
+      await createNotificationSafely({
+        ...details,
+        sender: userId,
+        transaction: transaction._id,
+        product: transaction.product,
       });
     }
 
