@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import StudentDashboard from "./pages/StudentDashboard";
 import SellerDashboard from "./pages/SellerDashboard";
 import AddProduct from "./pages/AddProduct";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/seller-dashboard" element={<SellerDashboard />} />
           <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
 
